@@ -88,6 +88,7 @@ jobs:
       id: format_release
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       run: |
+        cd pve-edge-kernel
         release=$(scripts/version.sh)
         echo "::set-output name=release::$release"
         changelog=$(dpkg-parsechangelog -c 1 -l debian/changelog)
