@@ -1,0 +1,8 @@
+# Build artifacts
+build
+*.prepared
+config*.org
+*.deb
+*.ddeb
+pve-*
+linux-*

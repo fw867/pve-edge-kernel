@@ -1,0 +1,35 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          sriov_script
+# Required-Start:    $network $named $remote_fs $syslog $sriov_scripts
+# Required-Stop:     $remote_fs $sriov_scripts
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: SR-IOV initialization.
+#Description:       Initializing VM's network with sriov support.
+### END INIT INFO
+
+start () {
+    #enable Sriov
+    echo 1 > /sys/class/net/ens2f0/device/sriov_numvfs
+    ip link set dev ens2f0 up
+    ip link set dev ens2f0 vf 0 mac 00:11:22:33:44:6A
+}
+stop () {
+    echo 0 > /sys/class/net/ens2f0/device/sriov_numvfs
+}
+
+case $1 in
+    start)
+        start
+        ;;
+    stop | force-stop)
+        stop
+        ;;
+    *)
+        echo "Usage: $0 {start|stop}" >&2
+        exit 1
+        ;;
+esac
+
+exit 0

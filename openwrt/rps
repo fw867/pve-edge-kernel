@@ -1,0 +1,52 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:		hostapd
+# Required-Start:	$remote_fs
+# Required-Stop:	$remote_fs
+# Should-Start:		$network
+# Should-Stop:
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	Advanced IEEE 802.11 management daemon
+# Description:		Userspace IEEE 802.11 AP and IEEE 802.1X/WPA/WPA2/EAP
+#			Authenticator
+### END INIT INFO
+
+
+case "$1" in
+  start)
+    rfc=4096
+    cc=$(grep -c processor /proc/cpuinfo)
+    rsfe=$(echo $cc*$rfc | bc)
+    sysctl -w net.core.rps_sock_flow_entries=$rsfe
+    for fileRps in $(ls /sys/class/net/en*/queues/rx-*/rps_cpus)
+    do
+        echo $cc > $fileRps
+    done
+
+    for fileRfc in $(ls /sys/class/net/en*/queues/rx-*/rps_flow_cnt)
+    do
+        echo $rfc > $fileRfc
+    done
+   # tail /sys/class/net/en*/queues/rx-*/{rps_cpus,rps_flow_cnt}
+	;;
+  stop)
+
+	;;
+  reload)
+	;;
+  restart|force-reload)
+
+	;;
+  status)
+
+	;;
+  *)
+	N=/etc/init.d/$NAME
+	echo "Usage: $N {start|stop|restart|force-reload|reload|status}" >&2
+	exit 1
+	;;
+esac
+
+exit 0
