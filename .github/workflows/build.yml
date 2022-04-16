@@ -33,7 +33,7 @@ jobs:
 
     - name: Clone source code
       run: |
-        git clone $REPO_URL
+        git clone $REPO_URL -b v5.15.x
         cd pve-edge-kernel
         git submodule update --init --depth=1 --recursive linux
         git submodule update --init --recursive
