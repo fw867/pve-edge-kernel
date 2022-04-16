@@ -42,7 +42,7 @@ jobs:
       id: compile
       run: |
         cd pve-edge-kernel
-        scripts/update.sh -t linux-5.15.y
+        scripts/update.sh -t linux-5.17.y
         debian/rules debian/control
         sudo mk-build-deps -i
         debuild -ePVE* --jobs=auto -b -uc -us

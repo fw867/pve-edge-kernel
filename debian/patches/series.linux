@@ -9,14 +9,9 @@ pve/0003-pci-Enable-overrides-for-missing-ACS-capabilities-4..patch
 pve/0004-kvm-disable-default-dynamic-halt-polling-growth.patch
 pve/0005-net-core-downgrade-unregister_netdevice-refcount-lea.patch
 # pve/0006-Revert-PCI-Coalesce-host-bridge-contiguous-apertures.patch
-pve/0007-PCI-Reinstate-PCI-Coalesce-host-bridge-contiguous-ap.patch
+# pve/0007-PCI-Reinstate-PCI-Coalesce-host-bridge-contiguous-ap.patch
 pve/0008-do-not-generate-split-BTF-type-info-per-default.patch
 pve/0009-blk-cgroup-always-terminate-io.stat-lines.patch
-# pve/0010-fbdev-Hot-unplug-firmware-fb-devices-on-forced-remov.patch
-pve/0011-drivers-firmware-Don-t-mark-as-busy-the-simple-frame.patch
-pve/0012-drm-simpledrm-Request-memory-region-in-driver.patch
-pve/0013-fbdev-simplefb-Request-memory-region-in-driver.patch
-# pve/0014-Ubuntu-remove-leftover-reference-of-ubuntu-hio-drive.patch
 pve/650-netfilter-add-xt_FLOWOFFLOAD-target.patch
 pve/952-add-net-conntrack-events-support-multiple-registrant.patch
 pve/953-bnx2x_warpcore_8727_2_5g_sgmii_txfault.patch

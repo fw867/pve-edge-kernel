@@ -6,48 +6,10 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 ---
  create mode 100644 net/netfilter/xt_OFFLOAD.c
 
---- a/net/ipv4/netfilter/Kconfig
-+++ b/net/ipv4/netfilter/Kconfig
-@@ -56,8 +56,6 @@ config NF_TABLES_ARP
- 	help
- 	  This option enables the ARP support for nf_tables.
- 
--endif # NF_TABLES
--
- config NF_FLOW_TABLE_IPV4
- 	tristate "Netfilter flow table IPv4 module"
- 	depends on NF_FLOW_TABLE
-@@ -66,6 +64,8 @@ config NF_FLOW_TABLE_IPV4
- 
- 	  To compile it as a module, choose M here.
- 
-+endif # NF_TABLES
-+
- config NF_DUP_IPV4
- 	tristate "Netfilter IPv4 packet duplication to alternate destination"
- 	depends on !NF_CONNTRACK || NF_CONNTRACK
---- a/net/ipv6/netfilter/Kconfig
-+++ b/net/ipv6/netfilter/Kconfig
-@@ -45,7 +45,6 @@ config NFT_FIB_IPV6
- 	  multicast or blackhole.
- 
- endif # NF_TABLES_IPV6
--endif # NF_TABLES
- 
- config NF_FLOW_TABLE_IPV6
- 	tristate "Netfilter flow table IPv6 module"
-@@ -55,6 +54,8 @@ config NF_FLOW_TABLE_IPV6
- 
- 	  To compile it as a module, choose M here.
- 
-+endif # NF_TABLES
-+
- config NF_DUP_IPV6
- 	tristate "Netfilter IPv6 packet duplication to alternate destination"
- 	depends on !NF_CONNTRACK || NF_CONNTRACK
+
 --- a/net/netfilter/Kconfig
 +++ b/net/netfilter/Kconfig
-@@ -708,8 +708,6 @@ config NFT_REJECT_NETDEV
+@@ -713,8 +713,6 @@ config NFT_REJECT_NETDEV
  
  endif # NF_TABLES_NETDEV
  
@@ -56,7 +18,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  config NF_FLOW_TABLE_INET
  	tristate "Netfilter flow table mixed IPv4/IPv6 module"
  	depends on NF_FLOW_TABLE
-@@ -718,11 +716,12 @@ config NF_FLOW_TABLE_INET
+@@ -723,11 +721,12 @@ config NF_FLOW_TABLE_INET
  
  	  To compile it as a module, choose M here.
  
@@ -70,7 +32,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	help
  	  This option adds the flow table core infrastructure.
  
-@@ -1011,6 +1010,15 @@ config NETFILTER_XT_TARGET_NOTRACK
+@@ -1016,6 +1015,15 @@ config NETFILTER_XT_TARGET_NOTRACK
  	depends on NETFILTER_ADVANCED
  	select NETFILTER_XT_TARGET_CT
  
@@ -88,7 +50,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	depends on NETFILTER_ADVANCED
 --- a/net/netfilter/Makefile
 +++ b/net/netfilter/Makefile
-@@ -143,6 +143,7 @@ obj-$(CONFIG_NETFILTER_XT_TARGET_CLASSIF
+@@ -142,6 +142,7 @@ obj-$(CONFIG_NETFILTER_XT_TARGET_CLASSIF
  obj-$(CONFIG_NETFILTER_XT_TARGET_CONNSECMARK) += xt_CONNSECMARK.o
  obj-$(CONFIG_NETFILTER_XT_TARGET_CT) += xt_CT.o
  obj-$(CONFIG_NETFILTER_XT_TARGET_DSCP) += xt_DSCP.o
@@ -98,7 +60,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  obj-$(CONFIG_NETFILTER_XT_TARGET_LED) += xt_LED.o
 --- /dev/null
 +++ b/net/netfilter/xt_FLOWOFFLOAD.c
-@@ -0,0 +1,657 @@
+@@ -0,0 +1,656 @@
 +/*
 + * Copyright (C) 2018-2021 Felix Fietkau <nbd@nbd.name>
 + *
@@ -575,16 +537,15 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +	}
 +
 +	table = &flowtable[!!(info->flags & XT_FLOWOFFLOAD_HW)];
-+
-+	net = read_pnet(&table->ft.net);
-+	if (!net)
-+		write_pnet(&table->ft.net, xt_net(par));
-+
 +	if (flow_offload_add(&table->ft, flow) < 0)
 +		goto err_flow_add;
 +
 +	xt_flowoffload_check_device(table, devs[0]);
 +	xt_flowoffload_check_device(table, devs[1]);
++
++	net = read_pnet(&table->ft.net);
++	if (!net)
++		write_pnet(&table->ft.net, xt_net(par));
 +
 +	dst_release(route.tuple[dir].dst);
 +	dst_release(route.tuple[!dir].dst);
@@ -806,7 +767,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +#endif /* _XT_FLOWOFFLOAD_H */
 --- a/include/net/netfilter/nf_flow_table.h
 +++ b/include/net/netfilter/nf_flow_table.h
-@@ -273,6 +273,10 @@ void nf_flow_table_free(struct nf_flowta
+@@ -277,6 +277,10 @@ void nf_flow_table_free(struct nf_flowta
  
  void flow_offload_teardown(struct flow_offload *flow);
  

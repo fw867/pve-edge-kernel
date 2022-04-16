@@ -12,7 +12,7 @@ was reverted upstream because of reports similar to
 
 Link: https://bugzilla.proxmox.com/show_bug.cgi?id=3552
 Link: https://lore.kernel.org/r/20210709231529.GA3270116@roeck-us.net
-Signed-off-by: Fabian Grünbichler <f.gruenbichler@proxmox.com>
+Signed-off-by: Fabian GrÃ¼nbichler <f.gruenbichler@proxmox.com>
 Signed-off-by: Thomas Lamprecht <t.lamprecht@proxmox.com>
 ---
  drivers/pci/probe.c | 50 ++++-----------------------------------------
@@ -28,12 +28,12 @@ index cb70d2605e97..258350f80f6c 100644
  #include <linux/bitfield.h>
 -#include <linux/list_sort.h>
  #include "pci.h"
- 
+
  #define CARDBUS_LATENCY_TIMER	176	/* secondary latency timer */
 @@ -881,31 +880,14 @@ static void pci_set_bus_msi_domain(struct pci_bus *bus)
  	dev_set_msi_domain(&bus->dev, d);
  }
- 
+
 -static int res_cmp(void *priv, const struct list_head *a,
 -		   const struct list_head *b)
 -{
@@ -68,7 +68,7 @@ index cb70d2605e97..258350f80f6c 100644
 @@ -988,35 +970,11 @@ static int pci_register_host_bridge(struct pci_host_bridge *bridge)
  	if (nr_node_ids > 1 && pcibus_to_node(bus) == NUMA_NO_NODE)
  		dev_warn(&bus->dev, "Unknown NUMA node; performance will be reduced\n");
- 
+
 -	/* Sort and coalesce contiguous windows */
 -	list_sort(NULL, &resources, res_cmp);
 -	resource_list_for_each_entry_safe(window, n, &resources) {
@@ -99,6 +99,6 @@ index cb70d2605e97..258350f80f6c 100644
 -			continue;
 -
 -		list_move_tail(&window->node, &bridge->windows);
- 
+
  		if (res->flags & IORESOURCE_BUS)
  			pci_bus_insert_busn_res(bus, bus->number, res->end);
