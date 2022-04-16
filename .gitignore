@@ -1,0 +1,20 @@
+# Build artifacts
+build
+*.prepared
+config*.org
+*.deb
+*.ddeb
+pve-*
+linux-*
+debian/autoreconf.after
+debian/autoreconf.before
+debian/control
+.headers_install_mark
+.install_mark
+.tools_compile_mark
+.tools_install_mark
+.usr_headers_install_mark
+debian/SOURCE
+debian/debhelper-build-stamp
+debian/files
+debian/watchdog-blacklist.tmp

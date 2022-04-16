@@ -1,0 +1,17 @@
+pve-kernel (5.15.34-3) pve; urgency=medium
+
+  * Update to Linux 5.15.34.
+
+ -- fw867 <mail.ffkykzs@gmail.com>  Sat, 16 Apr 2022 12:31:58 +0000
+
+pve-kernel (5.15.33-2) pve; urgency=medium
+
+  * Update to Linux 5.15.33.
+
+ -- fw867 <mail.ffkykzs@gmail.com>  Tue, 12 Apr 2022 02:10:51 +0000
+
+pve-kernel (5.15.33-1) pve; urgency=medium
+
+  * Update to Linux 5.15.33.
+
+ -- fw867 <mail.ffkykzs@gmail.com>  Mon, 11 Apr 2022 16:05:05 +0000
