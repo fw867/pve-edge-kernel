@@ -16,3 +16,4 @@ pve/650-netfilter-add-xt_FLOWOFFLOAD-target.patch
 pve/952-add-net-conntrack-events-support-multiple-registrant.patch
 pve/953-bnx2x_warpcore_8727_2_5g_sgmii_txfault.patch
 pve/954-add-netfilter-full-cone-nat.patch
+pve/999-ixgbe-add-disabling-NBASE-T-suppression-hack.patch

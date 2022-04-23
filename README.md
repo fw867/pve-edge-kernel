@@ -67,6 +67,17 @@ net.netfilter.nf_conntrack_tcp_timeout_close_wait=10
 net.netfilter.nf_conntrack_tcp_timeout_last_ack=10
 net.core.somaxconn=65535
 ```
+## x550开启NBASE-T协商2.5G 5G
+> 1.使用ethtool配置
+```shell
+ethtool -s ens2f0 advertise 0x1800000001028
+```
+> 2.配置自动开启
+```shell
+echo "options ixgbe enable_nbase_t_suppression_hack=0" > /etc/modprobe.d/ixgbe.conf
+
+update-initramfs -u
+```
 ## 自编译
 > 最少10G空闲硬盘空间
 ```shell

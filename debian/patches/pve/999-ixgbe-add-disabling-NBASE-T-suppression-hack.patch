@@ -1,0 +1,29 @@
+diff --git a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+index 13c4782b920a..8073d375bde2 100644
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -156,6 +156,11 @@
+ MODULE_PARM_DESC(allow_unsupported_sfp,
+ 		 "Allow unsupported and untested SFP+ modules on 82599-based adapters");
+ 
++static unsigned int enable_nbase_t_suppression_hack = 1;
++module_param(enable_nbase_t_suppression_hack, uint, 0);
++MODULE_PARM_DESC(enable_nbase_t_suppression_hack,
++		 "Enable hack which suppresses the advertisement of NBASE-T speeds to accommodate broken network switches");
++
+ #define DEFAULT_MSG_ENABLE (NETIF_MSG_DRV|NETIF_MSG_PROBE|NETIF_MSG_LINK)
+ static int debug = -1;
+ module_param(debug, int, 0);
+@@ -5535,8 +5540,10 @@
+ 		 * to accommodate broken network switches in the field
+ 		 * which cannot cope with advertised NBASE-T speeds
+ 		 */
+-		speed &= ~(IXGBE_LINK_SPEED_5GB_FULL |
+-			   IXGBE_LINK_SPEED_2_5GB_FULL);
++		if (enable_nbase_t_suppression_hack) {
++			speed &= ~(IXGBE_LINK_SPEED_5GB_FULL |
++				   IXGBE_LINK_SPEED_2_5GB_FULL);
++		}
+ 	}
+ 
+ 	if (ret)
