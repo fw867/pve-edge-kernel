@@ -9,9 +9,6 @@ on:
   workflow_dispatch:
 
 env:
-  REPO_URL: https://github.com/fw867/pve-edge-kernel.git
-  REPO_BRANCH: v5.17.x
-  CONFIG_FILE: .config
   SSH_ACTIONS: false
   UPLOAD_BIN_DIR: true
   TZ: Asia/Shanghai
@@ -21,8 +18,11 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@master
+    - name: Checkout Sources
+      uses: actions/checkout@v2
+      with:
+          submodules: recursive
+          path: pve-edge-kernel
     
     - name: Initialization environment
       env:
@@ -34,18 +34,10 @@ jobs:
         sudo apt-get autoremove --purge
         sudo apt-get clean
 
-    - name: Clone source code
-      run: |
-        git clone $REPO_URL -b $REPO_BRANCH
-        cd pve-edge-kernel
-        git submodule update --init --depth=1 --recursive linux
-        git submodule update --init --recursive
-
     - name: Compile the PVE kernel
       id: compile
       run: |
         cd pve-edge-kernel
-        #scripts/update.sh -t linux-5.17.y
         debian/rules debian/control
         sudo mk-build-deps -i
         debuild -ePVE* --jobs=auto -b -uc -us
