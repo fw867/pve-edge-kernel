@@ -734,9 +734,9 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 -static int
 -nf_flow_table_iterate(struct nf_flowtable *flow_table,
 +int nf_flow_table_iterate(struct nf_flowtable *flow_table,
- 		      void (*iter)(struct nf_flowtable *flowtable,
-                     struct flow_offload *flow, void *data),
+ 		      void (*iter)(struct flow_offload *flow, void *data),
  		      void *data)
+ {
 @@ -430,6 +428,7 @@ nf_flow_table_iterate(struct nf_flowtabl
  
  	return err;
