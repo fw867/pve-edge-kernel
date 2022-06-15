@@ -1,3 +1,9 @@
+pve-kernel (5.17.15-1) pve; urgency=medium
+
+  * Update to Linux 5.17.15.
+
+ -- fw867 <mail.ffkykzs@gmail.com>  Wed, 15 Jun 2022 05:28:38 +0000
+
 pve-kernel (5.17.14-1) pve; urgency=medium
 
   * Update to Linux 5.17.14.
