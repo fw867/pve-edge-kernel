@@ -3,7 +3,7 @@ KERNEL_MAJMIN=$(shell ./scripts/version.sh -n)
 KERNEL_VER=$(shell ./scripts/version.sh -L)
 
 ## Debian package information
-PKG_DISTRIBUTOR ?= PVE Pve
+PKG_DISTRIBUTOR ?= PVE fw867
 PKG_RELEASE = $(shell ./scripts/version.sh -r)
 PKG_DATE := $(shell dpkg-parsechangelog -SDate)
 PKG_DATE_UTC_ISO := $(shell date -u -d '$(PKG_DATE)' +%Y-%m-%d)
