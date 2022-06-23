@@ -89,4 +89,4 @@ jobs:
         tag: v${{ steps.format_release.outputs.release }}
         body: ${{ steps.format_release.outputs.changelog }}
         token: ${{ secrets.RElEASE_TOKEN }}
-        artifacts: "Releasedebs.tar.gz"
+        artifacts: "pve-headers-*.deb,pve-kernel-*.deb,linux-tools-*.deb"
