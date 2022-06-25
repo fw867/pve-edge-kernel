@@ -11,7 +11,6 @@ pve/0005-net-core-downgrade-unregister_netdevice-refcount-lea.patch
 # pve/0006-Revert-PCI-Coalesce-host-bridge-contiguous-apertures.patch
 # pve/0007-PCI-Reinstate-PCI-Coalesce-host-bridge-contiguous-ap.patch
 pve/0008-do-not-generate-split-BTF-type-info-per-default.patch
-pve/0009-blk-cgroup-always-terminate-io.stat-lines.patch
 pve/650-netfilter-add-xt_FLOWOFFLOAD-target.patch
 pve/952-add-net-conntrack-events-support-multiple-registrant.patch
 pve/953-bnx2x_warpcore_8727_2_5g_sgmii_txfault.patch

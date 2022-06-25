@@ -30,7 +30,7 @@ jobs:
       run: |
         sudo rm -rf /swapfile /usr/share/dotnet /usr/local/lib/android /opt/ghc
         sudo apt-get update
-        sudo apt-get install devscripts debhelper equivs git dwarves
+        sudo apt-get install devscripts debhelper equivs git dwarves python3-dev
         sudo apt-get autoremove --purge
         sudo apt-get clean
 
