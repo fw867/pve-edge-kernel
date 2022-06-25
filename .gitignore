@@ -4,7 +4,8 @@ build
 config*.org
 *.deb
 *.ddeb
-pve-*
+pve-headers-*
+pve-kernel-*
 linux-*
 debian/autoreconf.after
 debian/autoreconf.before
