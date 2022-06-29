@@ -1,3 +1,9 @@
+pve-kernel (5.18.8-1) pve; urgency=medium
+
+  * Update to Linux 5.18.8.
+
+ -- fw867 <mail.ffkykzs@gmail.com>  Wed, 29 Jun 2022 09:38:39 +0000
+
 pve-kernel (5.18.7-6) pve; urgency=medium
 
   * Update to Linux 5.18.7.
