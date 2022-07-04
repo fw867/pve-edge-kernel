@@ -66,7 +66,7 @@ jobs:
       run: |
         #tar czf Dbgsym.tar.gz *dbgsym*.deb
         #rm -f *dbgsym*.deb
-        tar czf Releasedebs.tar.gz *.deb
+        tar czf Alldebs.tar.gz *.deb
 
     - name: Format Release Name
       id: format_release
@@ -89,4 +89,4 @@ jobs:
         tag: v${{ steps.format_release.outputs.release }}
         body: ${{ steps.format_release.outputs.changelog }}
         token: ${{ secrets.RElEASE_TOKEN }}
-        artifacts: "pve-headers-*.deb,pve-kernel-*.deb,linux-tools-*.deb"
+        artifacts: "Alldebs.tar.gz"
