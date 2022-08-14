@@ -1,6 +1,6 @@
 ### 主要特性
 
-- linux kernel version :V5.18.x    感谢：[@ubuntu-jammy](https://code.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy) [@pve-kernel](https://github.com/proxmox/pve-kernel) [@pve-edge-kernel](https://github.com/fabianishere/pve-edge-kernel)
+- linux kernel version :V5.19.x    感谢：[@ubuntu-jammy](https://code.launchpad.net/~ubuntu-kernel/ubuntu/+source/linux/+git/jammy) [@pve-kernel](https://github.com/proxmox/pve-kernel) [@pve-edge-kernel](https://github.com/fabianishere/pve-edge-kernel)
 - 添加FULLCONE-NAT    原项目：[@Chion82](https://github.com/Chion82/netfilter-full-cone-nat)
 - 添加ppp拨号组件
 - 添加BCM578XX 2.5G支持
