@@ -3,9 +3,12 @@ Date: Tue, 20 Feb 2018 15:56:02 +0100
 Subject: [PATCH] netfilter: add xt_FLOWOFFLOAD target
 
 Signed-off-by: Felix Fietkau <nbd@nbd.name>
+---
+ create mode 100644 net/netfilter/xt_OFFLOAD.c
+
 --- a/net/netfilter/Kconfig
 +++ b/net/netfilter/Kconfig
-@@ -708,8 +708,6 @@ config NFT_REJECT_NETDEV
+@@ -713,8 +713,6 @@ config NFT_REJECT_NETDEV
  
  endif # NF_TABLES_NETDEV
  
@@ -14,7 +17,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  config NF_FLOW_TABLE_INET
  	tristate "Netfilter flow table mixed IPv4/IPv6 module"
  	depends on NF_FLOW_TABLE
-@@ -718,11 +716,12 @@ config NF_FLOW_TABLE_INET
+@@ -723,11 +721,12 @@ config NF_FLOW_TABLE_INET
  
  	  To compile it as a module, choose M here.
  
@@ -28,7 +31,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	help
  	  This option adds the flow table core infrastructure.
  
-@@ -1011,6 +1010,15 @@ config NETFILTER_XT_TARGET_NOTRACK
+@@ -1016,6 +1015,15 @@ config NETFILTER_XT_TARGET_NOTRACK
  	depends on NETFILTER_ADVANCED
  	select NETFILTER_XT_TARGET_CT
  
@@ -46,7 +49,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  	depends on NETFILTER_ADVANCED
 --- a/net/netfilter/Makefile
 +++ b/net/netfilter/Makefile
-@@ -143,6 +143,7 @@ obj-$(CONFIG_NETFILTER_XT_TARGET_CLASSIF
+@@ -147,6 +147,7 @@ obj-$(CONFIG_NETFILTER_XT_TARGET_CLASSIF
  obj-$(CONFIG_NETFILTER_XT_TARGET_CONNSECMARK) += xt_CONNSECMARK.o
  obj-$(CONFIG_NETFILTER_XT_TARGET_CT) += xt_CT.o
  obj-$(CONFIG_NETFILTER_XT_TARGET_DSCP) += xt_DSCP.o
@@ -56,7 +59,7 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
  obj-$(CONFIG_NETFILTER_XT_TARGET_LED) += xt_LED.o
 --- /dev/null
 +++ b/net/netfilter/xt_FLOWOFFLOAD.c
-@@ -0,0 +1,696 @@
+@@ -0,0 +1,694 @@
 +/*
 + * Copyright (C) 2018-2021 Felix Fietkau <nbd@nbd.name>
 + *
@@ -247,11 +250,9 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +}
 +
 +static void
-+xt_flowoffload_check_hook(struct nf_flowtable *flowtable,
-+			  struct flow_offload *flow, void *data)
++xt_flowoffload_check_hook(struct flow_offload *flow, void *data)
 +{
-+	struct xt_flowoffload_table *table;
-+	table = container_of(flowtable, struct xt_flowoffload_table, ft);
++	struct xt_flowoffload_table *table = data;
 +	struct flow_offload_tuple *tuple0 = &flow->tuplehash[0].tuple;
 +	struct flow_offload_tuple *tuple1 = &flow->tuplehash[1].tuple;
 +	struct xt_flowoffload_hook *hook;
@@ -282,8 +283,8 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +		hook->used = false;
 +	spin_unlock_bh(&hooks_lock);
 +
-+	err = nf_flow_table_iterate(&table->ft, xt_flowoffload_check_hook,
-+				    NULL);
++
++
 +	if (err && err != -EAGAIN)
 +		goto out;
 +
@@ -753,34 +754,6 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +MODULE_LICENSE("GPL");
 +module_init(xt_flowoffload_tg_init);
 +module_exit(xt_flowoffload_tg_exit);
---- a/net/netfilter/nf_flow_table_core.c
-+++ b/net/netfilter/nf_flow_table_core.c
-@@ -7,7 +7,6 @@
- #include <linux/netdevice.h>
- #include <net/ip.h>
- #include <net/ip6_route.h>
--#include <net/netfilter/nf_tables.h>
- #include <net/netfilter/nf_flow_table.h>
- #include <net/netfilter/nf_conntrack.h>
- #include <net/netfilter/nf_conntrack_core.h>
-@@ -380,8 +379,7 @@ flow_offload_lookup(struct nf_flowtable
- }
- EXPORT_SYMBOL_GPL(flow_offload_lookup);
- 
--static int
--nf_flow_table_iterate(struct nf_flowtable *flow_table,
-+int nf_flow_table_iterate(struct nf_flowtable *flow_table,
- 		      void (*iter)(struct nf_flowtable *flowtable,
- 				   struct flow_offload *flow, void *data),
- 		      void *data)
-@@ -435,6 +433,7 @@ static void nf_flow_offload_gc_step(stru
- 		nf_flow_offload_stats(flow_table, flow);
- 	}
- }
-+EXPORT_SYMBOL_GPL(nf_flow_table_iterate);
- 
- static void nf_flow_offload_work_gc(struct work_struct *work)
- {
 --- /dev/null
 +++ b/include/uapi/linux/netfilter/xt_FLOWOFFLOAD.h
 @@ -0,0 +1,17 @@
@@ -801,17 +774,3 @@ Signed-off-by: Felix Fietkau <nbd@nbd.name>
 +};
 +
 +#endif /* _XT_FLOWOFFLOAD_H */
---- a/include/net/netfilter/nf_flow_table.h
-+++ b/include/net/netfilter/nf_flow_table.h
-@@ -275,6 +275,11 @@ void nf_flow_table_free(struct nf_flowta
- 
- void flow_offload_teardown(struct flow_offload *flow);
- 
-+int nf_flow_table_iterate(struct nf_flowtable *flow_table,
-+                      void (*iter)(struct nf_flowtable *flowtable,
-+                                   struct flow_offload *flow, void *data),
-+                      void *data);
-+
- void nf_flow_snat_port(const struct flow_offload *flow,
- 		       struct sk_buff *skb, unsigned int thoff,
- 		       u8 protocol, enum flow_offload_tuple_dir dir);
