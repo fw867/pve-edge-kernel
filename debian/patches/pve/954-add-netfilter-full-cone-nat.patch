@@ -1414,7 +1414,7 @@
 +MODULE_ALIAS("ipt_FULLCONENAT");
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
 +++ b/net/netfilter/nf_nat_fullcone.c     2022-09-06 11:01:49.943146442 +0000
-@@ -0,0 +1,1590 @@
+@@ -0,0 +1,1591 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +
 +/*
@@ -3004,6 +3004,7 @@
 +       return 5;
 +}
 +
++MODULE_LICENSE("GPL");
 +EXPORT_SYMBOL_GPL(nf_nat_fullcone_ipv6);
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
 +++ b/net/netfilter/nf_nat_fullcone.h     2022-09-06 11:01:49.943146442 +0000
