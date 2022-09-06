@@ -36,8 +36,10 @@ dpkg -i *.deb
 
 > 在/etc/modules-load.d/openwrt.conf内加入
 
+```
 nf_nat_fullcone
 nft_ext_fullcone
+ ``` 
 
 > 直通网卡配置
 
