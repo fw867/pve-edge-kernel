@@ -34,6 +34,11 @@ dpkg -i *.deb
 | openwrt.conf  | 开机自启openwrt需要的模块  | /etc/modules-load.d/  |无需
 | 199.conf  | lxc op的配置模版  |  /etc/pve/lxc/{ct id}/ |根据实际修改硬盘目录和网卡 |
 
+> 在/etc/modules-load.d/openwrt.conf内加入
+
+nf_nat_fullcone
+nft_ext_fullcone
+
 > 直通网卡配置
 
 ```
