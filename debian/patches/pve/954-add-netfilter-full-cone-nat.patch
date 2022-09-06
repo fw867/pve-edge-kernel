@@ -1414,7 +1414,7 @@
 +MODULE_ALIAS("ipt_FULLCONENAT");
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
 +++ b/net/netfilter/nf_nat_fullcone.c     2022-09-06 11:01:49.943146442 +0000
-@@ -0,0 +1,1591 @@
+@@ -0,0 +1,1593 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +
 +/*
@@ -3005,6 +3005,8 @@
 +}
 +
 +MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("Xtables: implementation of RFC3489 full cone NAT");
++MODULE_AUTHOR("Chion Tang <tech@chionlab.moe>");
 +EXPORT_SYMBOL_GPL(nf_nat_fullcone_ipv6);
 --- /dev/null	1970-01-01 00:00:00.000000000 +0000
 +++ b/net/netfilter/nf_nat_fullcone.h     2022-09-06 11:01:49.943146442 +0000
