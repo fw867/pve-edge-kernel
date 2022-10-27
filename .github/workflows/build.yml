@@ -19,7 +19,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.pull_request.merged == true }}
     steps:
     - name: Checkout Sources
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
           submodules: recursive
           path: pve-edge-kernel
@@ -55,7 +55,7 @@ jobs:
       run: sleep 4h
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v2-preview
+      uses: actions/upload-artifact@v3
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_BIN_DIR == 'true'
       with:
         name: alldebs
