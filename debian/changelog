@@ -1,3 +1,9 @@
+pve-kernel (6.0.18-1) pve; urgency=medium
+
+  * Update to Linux 6.0.18.
+
+ -- fw867 <mail.ffkykzs@gmail.com>  Sun, 08 Jan 2023 11:17:41 +0000
+
 pve-kernel (6.0.17-1) pve; urgency=medium
 
   * Update to Linux 6.0.17.
